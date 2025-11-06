@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "016FAB2821BFE78100AF60DC"
-               BuildableName = "LRUCache.framework"
-               BlueprintName = "LRUCache"
-               ReferencedContainer = "container:LRUCache.xcodeproj">
+               BuildableName = "ObservableLRUCache.framework"
+               BlueprintName = "ObservableLRUCache"
+               ReferencedContainer = "container:ObservableLRUCache.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "01AA52E52E3DFC96008A01BF"
-               BuildableName = "LRUCachePerformanceTests.xctest"
-               BlueprintName = "LRUCachePerformanceTests"
-               ReferencedContainer = "container:LRUCache.xcodeproj">
+               BuildableName = "ObservableLRUCachePerformanceTests.xctest"
+               BlueprintName = "ObservableLRUCachePerformanceTests"
+               ReferencedContainer = "container:ObservableLRUCache.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -50,9 +50,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "016FAB3121BFE78100AF60DC"
-               BuildableName = "LRUCacheTests.xctest"
-               BlueprintName = "LRUCacheTests"
-               ReferencedContainer = "container:LRUCache.xcodeproj">
+               BuildableName = "ObservableLRUCacheTests.xctest"
+               BlueprintName = "ObservableLRUCacheTests"
+               ReferencedContainer = "container:ObservableLRUCache.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -78,9 +78,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "016FAB2821BFE78100AF60DC"
-            BuildableName = "LRUCache.framework"
-            BlueprintName = "LRUCache"
-            ReferencedContainer = "container:LRUCache.xcodeproj">
+            BuildableName = "ObservableLRUCache.framework"
+            BlueprintName = "ObservableLRUCache"
+            ReferencedContainer = "container:ObservableLRUCache.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

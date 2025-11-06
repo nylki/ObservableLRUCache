@@ -1,19 +1,19 @@
-// swift-tools-version:5.7
+// swift-tools-version:6.0
 import PackageDescription
 
 let package = Package(
-    name: "LRUCache",
+    name: "ObservableLRUCache",
     platforms: [
-        .iOS(.v13),
-        .macOS(.v10_15),
-        .tvOS(.v13),
-        .watchOS(.v6),
+        .iOS(.v18),
+        .macOS(.v15),
+        .tvOS(.v18),
+        .watchOS(.v11),
     ],
     products: [
-        .library(name: "LRUCache", targets: ["LRUCache"]),
+        .library(name: "ObservableLRUCache", targets: ["ObservableLRUCache"]),
     ],
     targets: [
-        .target(name: "LRUCache", path: "Sources"),
-        .testTarget(name: "LRUCacheTests", dependencies: ["LRUCache"], path: "Tests"),
+        .target(name: "ObservableLRUCache", path: "Sources"),
+        .testTarget(name: "ObservableLRUCacheTests", dependencies: ["ObservableLRUCache"], path: "Tests"),
     ]
 )

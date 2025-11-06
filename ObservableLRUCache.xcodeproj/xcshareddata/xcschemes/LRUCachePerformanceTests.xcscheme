@@ -19,9 +19,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "01AA52E52E3DFC96008A01BF"
-               BuildableName = "LRUCachePerformanceTests.xctest"
-               BlueprintName = "LRUCachePerformanceTests"
-               ReferencedContainer = "container:LRUCache.xcodeproj">
+               BuildableName = "ObservableLRUCachePerformanceTests.xctest"
+               BlueprintName = "ObservableLRUCachePerformanceTests"
+               ReferencedContainer = "container:ObservableLRUCache.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

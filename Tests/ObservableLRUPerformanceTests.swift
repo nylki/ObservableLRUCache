@@ -1,33 +1,33 @@
 //
 //  LRUPerformanceTests.swift
-//  LRUCacheTests
+//  ObservableLRUCacheTests
 //
 //  Created by Nick Lockwood on 05/08/2021.
 //  Copyright © 2021 Nick Lockwood. All rights reserved.
 //
 
-import LRUCache
+import ObservableLRUCache
 import XCTest
 
 class LRUPerformanceTests: XCTestCase {
     let iterations = 10000
 
-    private func populateCache(_ cache: LRUCache<Int, Int>) {
+    private func populateCache(_ cache: ObservableLRUCache<Int, Int>) {
         for i in 0 ..< iterations {
             cache.setValue(.random(in: .min ... .max), forKey: i)
         }
     }
 
-    private func createCache(populated: Bool) -> LRUCache<Int, Int> {
-        let cache = LRUCache<Int, Int>()
+    private func createCache(populated: Bool) -> ObservableLRUCache<Int, Int> {
+        let cache = ObservableLRUCache<Int, Int>()
         if populated {
             populateCache(cache)
         }
         return cache
     }
 
-    private func createCaches(_ count: Int = 10, populated: Bool) -> [LRUCache<Int, Int>] {
-        var caches = [LRUCache<Int, Int>]()
+    private func createCaches(_ count: Int = 10, populated: Bool) -> [ObservableLRUCache<Int, Int>] {
+        var caches = [ObservableLRUCache<Int, Int>]()
         for _ in 0 ... count {
             caches.append(createCache(populated: populated))
         }
@@ -110,7 +110,7 @@ class LRUPerformanceTests: XCTestCase {
     #if !os(WASI)
 
     func testConcurrentAccess() {
-        let cache = LRUCache<String, Int>()
+        let cache = ObservableLRUCache<String, Int>()
         measure {
             let queue = DispatchQueue(label: "stress.test", attributes: .concurrent)
             let group = DispatchGroup()

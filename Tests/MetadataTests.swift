@@ -1,13 +1,13 @@
 //
 //  MetadataTests.swift
-//  LRUCacheTests
+//  ObservableLRUCacheTests
 //
 //  Created by Nick Lockwood on 04/07/2021.
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
 #if !os(WASI)
-@testable import LRUCache
+@testable import ObservableLRUCache
 import XCTest
 
 private let projectDirectory = URL(fileURLWithPath: #file)
@@ -17,11 +17,11 @@ private let changelogURL = projectDirectory
     .appendingPathComponent("CHANGELOG.md")
 
 private let projectURL = projectDirectory
-    .appendingPathComponent("LRUCache.xcodeproj")
+    .appendingPathComponent("ObservableLRUCache.xcodeproj")
     .appendingPathComponent("project.pbxproj")
 
 private let projectVersion: String = {
-    let string = try! String(contentsOf: projectURL)
+    let string = try! String(contentsOf: projectURL, encoding: .utf8)
     let start = string.range(of: "MARKETING_VERSION = ")!.upperBound
     let end = string.range(of: ";", range: start ..< string.endIndex)!
         .lowerBound

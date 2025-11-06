@@ -1,14 +1,16 @@
 //
-//  LRUCache.swift
-//  LRUCache
+//  ObservableLRUCache.swift
+//  ObservableLRUCache
 //
 //  Created by Nick Lockwood on 05/08/2021.
 //  Copyright © 2021 Nick Lockwood. All rights reserved.
+//  Modified by Tom Brewe on 2025-11-06 (@Observable macro conformance).
+//  Copyright © 2025 Tom Brewe. All rights reserved.
 //
 //  Distributed under the permissive MIT license
 //  Get the latest version from here:
 //
-//  https://github.com/nicklockwood/LRUCache
+//  https://github.com/nylki/ObservableLRUCache
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -31,24 +33,17 @@
 
 import Foundation
 
-#if !os(WASI)
-
-@available(*, deprecated, message: "Do not use")
-public let LRUCacheMemoryWarningNotification: NSNotification.Name = _notification
-
-#endif
-
-public final class LRUCache<Key: Hashable & Sendable, Value>: @unchecked Sendable {
+@Observable public final class ObservableLRUCache<Key: Hashable & Sendable, Value>: @unchecked Sendable {
     private var _values: [Key: Container] = [:]
-    private var _countLimit: Int
-    private var _totalCost: Int = 0
-    private var _totalCostLimit: Int
-    private unowned(unsafe) var head: Container?
-    private unowned(unsafe) var tail: Container?
-    private let lock: NSLock = .init()
+    @ObservationIgnored private var _countLimit: Int
+    @ObservationIgnored private var _totalCost: Int = 0
+    @ObservationIgnored private var _totalCostLimit: Int
+    @ObservationIgnored private unowned(unsafe) var head: Container?
+    @ObservationIgnored private unowned(unsafe) var tail: Container?
+    @ObservationIgnored private let lock: NSLock = .init()
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS) || os(visionOS)
-    private let memoryPressureSource: DispatchSourceMemoryPressure
+    @ObservationIgnored private let memoryPressureSource: DispatchSourceMemoryPressure
     #endif
 
     /// Initialize the cache with the specified `totalCostLimit` and `countLimit`
@@ -72,18 +67,9 @@ public final class LRUCache<Key: Hashable & Sendable, Value>: @unchecked Sendabl
 
     #if !os(WASI)
 
-    @available(*, deprecated, message: "Do not use")
-    public convenience init(
-        totalCostLimit: Int = .max,
-        countLimit: Int = .max,
-        notificationCenter: NotificationCenter
-    ) {
-        self.init(totalCostLimit: totalCostLimit, countLimit: countLimit)
-        registerNotifications(for: notificationCenter)
-    }
 
-    private var token: AnyObject?
-    private var notificationCenter: NotificationCenter = .default
+    @ObservationIgnored private var token: AnyObject?
+    @ObservationIgnored private var notificationCenter: NotificationCenter = .default
 
     func registerNotifications(for notificationCenter: NotificationCenter) {
         token.map(self.notificationCenter.removeObserver)
@@ -108,7 +94,7 @@ public final class LRUCache<Key: Hashable & Sendable, Value>: @unchecked Sendabl
     #endif
 }
 
-public extension LRUCache {
+public extension ObservableLRUCache {
     /// The current total cost of values in the cache
     var totalCost: Int {
         atomic { _totalCost }
@@ -186,14 +172,6 @@ public extension LRUCache {
         }
     }
 
-    /// All keys in the cache, ordered from least recently used to most recently used
-    @available(*, deprecated, renamed: "orderedKeys")
-    var allKeys: [Key] { orderedKeys }
-
-    /// All values in the cache, ordered from least recently used to most recently used
-    @available(*, deprecated, renamed: "orderedValues")
-    var allValues: [Value] { orderedValues }
-
     /// Insert a value into the cache with optional `cost` and mark it as most recently used
     func setValue(_ value: Value?, forKey key: Key, cost: Int = 0) {
         guard let value else {
@@ -259,10 +237,6 @@ public extension LRUCache {
             _totalCost = 0
         }
     }
-
-    /// Remove all values from the cache
-    @available(*, deprecated, renamed: "removeAll")
-    func removeAllValues() { removeAll() }
 }
 
 #if canImport(UIKit) && !os(watchOS)
@@ -270,10 +244,10 @@ import UIKit
 
 private let _notification: NSNotification.Name = UIApplication.didReceiveMemoryWarningNotification
 #elseif !os(WASI)
-private let _notification: NSNotification.Name = .init("LRUCacheMemoryWarningNotification")
+private let _notification: NSNotification.Name = .init("ObservableLRUCacheMemoryWarningNotification")
 #endif
 
-private extension LRUCache {
+private extension ObservableLRUCache {
     final class Container {
         var value: Value
         var cost: Int
